@@ -4,41 +4,23 @@ import (
 	"bufio"
 	"os"
 	"runtime/pprof"
+	"sort"
 	"strconv"
 )
 
 type orderedList struct {
-	root *listEntry
-}
-
-type listEntry struct {
-	val  int
-	next *listEntry
+	ordered []int
 }
 
 func (l *orderedList) insert(val int) {
-	el := l.root
-	var prevEl *listEntry
-	for el != nil && val > el.val {
-		prevEl = el
-		el = el.next
-	}
-	newEl := &listEntry{val: val, next: el}
-	if prevEl == nil {
-		l.root = newEl
-	} else {
-		prevEl.next = newEl
-	}
+	pos := sort.SearchInts(l.ordered, val)
+	list := append([]int{}, l.ordered[:pos]...)
+	list = append(list, val)
+	l.ordered = append(list, l.ordered[pos:]...)
 }
 
 func (l *orderedList) items() []int {
-	var items []int
-	el := l.root
-	for el != nil {
-		items = append(items, el.val)
-		el = el.next
-	}
-	return items
+	return l.ordered
 }
 
 func addFromStdin() {

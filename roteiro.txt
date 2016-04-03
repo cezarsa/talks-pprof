@@ -1,7 +1,10 @@
 CPU profile
 
 -> Escrever código ruim
+
 -> Extrair profile manual
+   -> runtime/pprof
+
 -> Analisar profile
    -> interactive
    -> web
@@ -13,4 +16,29 @@ CPU profile
    -> Como testar também com o benchmark (StopTimer, StartTimer)
    -> Analisar profile do benchmark
    -> Salvar output do benchmark para comparação futura
+
+$ go test -bench . -cpuprofile cpu.prof
+testing: warning: no tests to run
+BenchmarkOrderedListInsert-4      200000       1065027 ns/op
+PASS
+ok      github.com/cezarsa/perf 213.182s
+
+
+-> Reescrever código, menos ruim, mas ainda ruim.
+-> Nova rodada de benchmarks
+
+$ go test -bench . -cpuprofile cpu.prof
+BenchmarkOrderedListInsert-4      100000        169606 ns/op
+PASS
+ok      github.com/cezarsa/perf 17.141s
+
+-> Comparar benchmark
+   -> go get golang.org/x/tools/cmd/benchcmp
+
+$ benchcmp before.txt after.txt
+benchmark                        old ns/op     new ns/op     delta
+BenchmarkOrderedListInsert-4     1065027       169606        -84.07%
+
+
+-> Transformar em app web
 
