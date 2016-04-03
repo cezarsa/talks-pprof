@@ -1,0 +1,13 @@
+CPU profile
+
+-> Escrever código ruim
+-> Extrair profiling manual
+-> Analisar profiling
+   -> interactive
+   -> web
+   -> callgrind
+      -> brew install qcachegrind
+
+-> Escrever benchmark
+-> Extrair profile do benchmark com go test -cpu
+->
