@@ -31,6 +31,16 @@ func (l *orderedList) insert(val int) {
 	}
 }
 
+func (l *orderedList) items() []int {
+	var items []int
+	el := l.root
+	for el != nil {
+		items = append(items, el.val)
+		el = el.next
+	}
+	return items
+}
+
 func addFromStdin() {
 	list := orderedList{}
 	scanner := bufio.NewScanner(os.Stdin)

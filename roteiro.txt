@@ -1,13 +1,16 @@
 CPU profile
 
 -> Escrever código ruim
--> Extrair profiling manual
--> Analisar profiling
+-> Extrair profile manual
+-> Analisar profile
    -> interactive
    -> web
    -> callgrind
       -> brew install qcachegrind
 
 -> Escrever benchmark
--> Extrair profile do benchmark com go test -cpu
-->
+   -> Extrair profile do benchmark com go test -cpuprofile cpu.out -bench .
+   -> Como testar também com o benchmark (StopTimer, StartTimer)
+   -> Analisar profile do benchmark
+   -> Salvar output do benchmark para comparação futura
+
