@@ -92,3 +92,23 @@ ok      github.com/cezarsa/perf 13.702s
 
 -> Rodar novamente alloc_space, comparar o alocado com o em uso. O resto é lixo.
    -> Tentar melhorar mais
+
+-> Nova versão, teoricamente a melhor, mas... [demo8]
+   -> Prof de mem não parece muito útil, pouco alocado
+   -> Prof de cpu mostra memmove
+   -> Idéias de porque é pior? (cache processador)
+
+--- Novo exemplo ---
+
+-> Buffer grande em memória [demo9]
+-> Profiling rodando nova rota
+   -> cpu, nada útil, tempo maior é no Random
+   -> mem, nenhum leak, mas uma grande quantidade de mem alocada
+
+-> Criar benchmark
+   -> Profile do benchmark, semelhante ao da rota
+
+-> Mudar para alocar buffer fixo 10k [demo10]
+-> Benchmark e profile
+   -> Benchmark melhor, menos alocs, maior performance
+

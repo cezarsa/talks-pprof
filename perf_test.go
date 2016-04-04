@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"math/rand"
 	"reflect"
 	"testing"
@@ -30,5 +31,11 @@ func BenchmarkOrderedListInsert(b *testing.B) {
 			b.Fatalf("items not ordered: %#v", items)
 		}
 		lastItem = item
+	}
+}
+
+func BenchmarkNumBin(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		numBin(ioutil.Discard)
 	}
 }
