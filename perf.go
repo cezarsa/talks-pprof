@@ -8,6 +8,7 @@ import (
 	_ "net/http/pprof"
 	"sort"
 	"strconv"
+	"sync"
 )
 
 type orderedList struct {
@@ -25,13 +26,20 @@ func (l *orderedList) items() []int {
 	return l.ordered
 }
 
+var pool = sync.Pool{
+	New: func() interface{} {
+		return make([]byte, 10)
+	},
+}
+
 func numBin(w io.Writer) {
-	data := make([]byte, 0, 10000)
+	data := pool.Get().([]byte)
 	for i := int64(0); i < 1000; i++ {
 		data = strconv.AppendInt(data, rand.Int63n(1000), 2)
 		data = append(data, '\n')
 	}
 	w.Write(data)
+	pool.Put(data[:0])
 }
 
 func main() {

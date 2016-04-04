@@ -112,3 +112,5 @@ ok      github.com/cezarsa/perf 13.702s
 -> Benchmark e profile
    -> Benchmark melhor, menos alocs, maior performance
 
+-> Mudar para usar sync.Pool [demo11]
+   -> Quase 0 allocs, maior performance, threadsafe
