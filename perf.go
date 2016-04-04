@@ -12,8 +12,12 @@ type orderedList struct {
 }
 
 func (l *orderedList) insert(val int) {
-	l.ordered = append(l.ordered, val)
-	sort.Ints(l.ordered)
+	pos := sort.SearchInts(l.ordered, val)
+	newSlice := make([]int, len(l.ordered)+1)
+	copy(newSlice, l.ordered[:pos])
+	newSlice[pos] = val
+	copy(newSlice[pos+1:], l.ordered[pos:])
+	l.ordered = newSlice
 }
 
 func (l *orderedList) items() []int {

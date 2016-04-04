@@ -83,4 +83,12 @@ ok      github.com/cezarsa/perf 13.702s
 
 -> Mostrar como extrair novo profile usando a rota /debug/pprof/heap
    -> Não precisa estar com atividade no servidor para pegar
+   -> Agora o inuse_space é útil
+   -> ?gc=1
+      -> útil só para o inuse_, não afeta o alloc
 
+-> Rodar wrk e comparar profiles, -base
+   -> Extremamente útil para encontrar leaks
+
+-> Rodar novamente alloc_space, comparar o alocado com o em uso. O resto é lixo.
+   -> Tentar melhorar mais
