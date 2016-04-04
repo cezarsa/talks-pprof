@@ -52,5 +52,35 @@ BenchmarkOrderedListInsert-4     1065027       169606        -84.07%
 --- Heap profiling ---
 
 -> 4 em 1. falar dos dois tipos, alloc e inuse
+   -> inuse_space
+   -> inuse_objects
+   -> alloc_space
+   -> alloc_objects
 
 -> Rodar benchmark novamente com -benchmem
+
+$ go test -bench . -benchmem -memprofile mem.prof
+BenchmarkOrderedListInsert-4      100000        176810 ns/op      629950 B/op          1 allocs/op
+PASS
+ok      github.com/cezarsa/perf 17.879s
+
+-> Analisar profile
+   -> Nada útil (tudo 0???)
+   -> -alloc_space
+
+-> Mudar para um só append()
+
+-> Rodar novamente benchmark
+
+$ go test -bench . -benchmem -memprofile mem.prof
+BenchmarkOrderedListInsert-4      100000        135605 ns/op      403980 B/op          1 allocs/op
+PASS
+ok      github.com/cezarsa/perf 13.702s
+
+-> Geralmente melhoria em quantidade de alocada se traduz em melhoria de performance também
+   -> Isso NÃO é regra
+   -> Refazer o código do jeito mais simples possível (append e sort.Ints())
+
+-> Mostrar como extrair novo profile usando a rota /debug/pprof/heap
+   -> Não precisa estar com atividade no servidor para pegar
+
