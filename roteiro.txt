@@ -25,7 +25,7 @@ ok      github.com/cezarsa/perf 213.182s
 
 
 -> Reescrever código, menos ruim, mas ainda ruim.
--> Nova rodada de benchmarks
+-> Nova rodada de benchmark
 
 $ go test -bench . -cpuprofile cpu.prof
 BenchmarkOrderedListInsert-4      100000        169606 ns/op
@@ -39,6 +39,18 @@ $ benchcmp before.txt after.txt
 benchmark                        old ns/op     new ns/op     delta
 BenchmarkOrderedListInsert-4     1065027       169606        -84.07%
 
+-> Analisar novo profile
+   -> Nada de útil, e agora?
+
+--- Desvio no caminho ---
 
 -> Transformar em app web
+-> Usar net/http/pprof
+-> Rodar wrk e fazer profiling cpu
+   -> Nada de útil novamente
 
+--- Heap profiling ---
+
+-> 4 em 1. falar dos dois tipos, alloc e inuse
+
+-> Rodar benchmark novamente com -benchmem

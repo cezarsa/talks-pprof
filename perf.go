@@ -1,11 +1,10 @@
 package main
 
 import (
-	"bufio"
-	"os"
-	"runtime/pprof"
+	"fmt"
+	"net/http"
+	_ "net/http/pprof"
 	"sort"
-	"strconv"
 )
 
 type orderedList struct {
@@ -23,25 +22,23 @@ func (l *orderedList) items() []int {
 	return l.ordered
 }
 
-func addFromStdin() {
-	list := orderedList{}
-	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		line := scanner.Text()
-		n, _ := strconv.ParseInt(line, 10, 32)
-		list.insert(int(n))
-	}
-}
-
 func main() {
-	file, err := os.Create("cpu_profile.out")
-	if err != nil {
-		panic("unable to open file: " + err.Error())
-	}
-	pprof.StartCPUProfile(file)
-	defer file.Close()
-	defer pprof.StopCPUProfile()
-	if os.Args[1] == "add" {
-		addFromStdin()
-	}
+	list := orderedList{}
+	nCh := make(chan int)
+	go func() {
+		for n := range nCh {
+			list.insert(n)
+		}
+	}()
+	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "POST" {
+			var n int
+			fmt.Fscanf(r.Body, "%d", &n)
+			r.Body.Close()
+			nCh <- n
+			return
+		}
+		fmt.Fprintf(w, "%#v", list.items())
+	}))
+	http.ListenAndServe(":8000", nil)
 }
