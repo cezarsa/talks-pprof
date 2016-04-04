@@ -1,6 +1,6 @@
 CPU profile
 
--> Escrever código ruim
+-> Escrever código ruim [demo1]
 
 -> Extrair profile manual
    -> runtime/pprof
@@ -11,7 +11,7 @@ CPU profile
    -> callgrind
       -> brew install qcachegrind
 
--> Escrever benchmark
+-> Escrever benchmark [demo2]
    -> Extrair profile do benchmark com go test -cpuprofile cpu.out -bench .
    -> Como testar também com o benchmark (StopTimer, StartTimer)
    -> Analisar profile do benchmark
@@ -24,7 +24,7 @@ PASS
 ok      github.com/cezarsa/perf 213.182s
 
 
--> Reescrever código, menos ruim, mas ainda ruim.
+-> Reescrever código, menos ruim, mas ainda ruim. [demo3]
 -> Nova rodada de benchmark
 
 $ go test -bench . -cpuprofile cpu.prof
@@ -44,7 +44,7 @@ BenchmarkOrderedListInsert-4     1065027       169606        -84.07%
 
 --- Desvio no caminho ---
 
--> Transformar em app web
+-> Transformar em app web [demo4]
 -> Usar net/http/pprof
 -> Rodar wrk e fazer profiling cpu
    -> Nada de útil novamente
@@ -68,7 +68,7 @@ ok      github.com/cezarsa/perf 17.879s
    -> Nada útil (tudo 0???)
    -> -alloc_space
 
--> Mudar para um só append()
+-> Mudar para uma só alocação com tudo [demo5]
 
 -> Rodar novamente benchmark
 
@@ -79,9 +79,9 @@ ok      github.com/cezarsa/perf 13.702s
 
 -> Geralmente melhoria em quantidade de alocada se traduz em melhoria de performance também
    -> Isso NÃO é regra
-   -> Refazer o código do jeito mais simples possível (append e sort.Ints())
+   -> Refazer o código do jeito mais simples possível (append e sort.Ints()) [demo6]
 
--> Mostrar como extrair novo profile usando a rota /debug/pprof/heap
+-> Mostrar como extrair novo profile usando a rota /debug/pprof/heap [demo7]
    -> Não precisa estar com atividade no servidor para pegar
    -> Agora o inuse_space é útil
    -> ?gc=1
@@ -112,3 +112,5 @@ ok      github.com/cezarsa/perf 13.702s
 -> Benchmark e profile
    -> Benchmark melhor, menos alocs, maior performance
 
+-> Mudar para usar sync.Pool [demo11]
+   -> Quase 0 allocs, maior performance, threadsafe
